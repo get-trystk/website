@@ -3,421 +3,279 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trystk — Stop wasting days on wrong tools</title>
-  <meta name="description" content="AI-powered Claude Code skill that finds, compares, and recommends the right SaaS, API, or library for your project.">
-  <meta name="theme-color" content="#0a0a14">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Trystk — Stop wasting days on wrong tools">
-  <meta property="og:description" content="AI-powered Claude Code skill that finds, compares, and recommends the right SaaS, API, or library for your project.">
+  <title>trystk — find the right tool before you integrate</title>
+  <meta name="description" content="Claude Code skill that finds, compares, and recommends the right SaaS, API, or library for your project.">
+  <meta name="theme-color" content="#0d1117">
+  <meta property="og:title" content="trystk — find the right tool before you integrate">
+  <meta property="og:description" content="Claude Code skill that finds, compares, and recommends the right SaaS, API, or library for your project.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://trystk.dev">
-
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Trystk — Stop wasting days on wrong tools">
-  <meta name="twitter:description" content="AI-powered Claude Code skill that finds, compares, and recommends the right SaaS, API, or library for your project.">
-
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23a855f7'/><text x='16' y='23' text-anchor='middle' font-family='system-ui' font-weight='700' font-size='20' fill='white'>T</text></svg>">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="twitter:title" content="trystk — find the right tool before you integrate">
+  <meta name="twitter:description" content="Claude Code skill that finds, compares, and recommends the right SaaS, API, or library for your project.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text x='0' y='24' font-size='28'>T</text></svg>">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #0a0a14;
-      color: #9ca3af;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      line-height: 1.6;
     }
 
-    code, .font-mono { font-family: 'JetBrains Mono', monospace; }
+    a { color: #58a6ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-    a { color: inherit; text-decoration: none; }
+    code {
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      font-size: 0.875rem;
+      background: #161b22;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+    }
 
-    /* Layout */
-    .container { max-width: 64rem; margin: 0 auto; padding: 0 1.5rem; }
-    .container-sm { max-width: 48rem; margin: 0 auto; padding: 0 1.5rem; }
-    .container-xs { max-width: 42rem; margin: 0 auto; padding: 0 1.5rem; }
-    .flex { display: flex; }
-    .flex-col { flex-direction: column; }
-    .items-center { align-items: center; }
-    .justify-center { justify-content: center; }
-    .justify-between { justify-content: space-between; }
-    .inline-flex { display: inline-flex; }
-    .text-center { text-align: center; }
-    .text-left { text-align: left; }
-    .mx-auto { margin-left: auto; margin-right: auto; }
-    .select-all { user-select: all; }
-    .overflow-x-auto { overflow-x: auto; }
-
-    /* Grid */
-    .grid { display: grid; gap: 2rem; }
-
-    /* Section */
-    .section { padding: 6rem 1.5rem; }
-    .section-border { border-top: 1px solid rgba(31, 41, 55, 0.5); }
-
-    /* Typography */
-    .text-white { color: #fff; }
-    .text-gray-300 { color: #d1d5db; }
-    .text-gray-400 { color: #9ca3af; }
-    .text-gray-500 { color: #6b7280; }
-    .text-purple-400 { color: #c084fc; }
-    .text-green-400 { color: #4ade80; }
-    .text-yellow-400 { color: #facc15; }
-    .font-bold { font-weight: 700; }
-    .font-semibold { font-weight: 600; }
-    .text-xs { font-size: 0.75rem; }
-    .text-sm { font-size: 0.875rem; }
-    .text-base { font-size: 1rem; }
-    .text-lg { font-size: 1.125rem; }
-    .text-xl { font-size: 1.25rem; }
-    .text-2xl { font-size: 1.5rem; }
-    .text-3xl { font-size: 1.875rem; }
-    .leading-tight { line-height: 1.1; }
-    .leading-relaxed { line-height: 1.625; }
+    pre {
+      background: #161b22;
+      border: 1px solid #21262d;
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
+    pre code { background: none; padding: 0; font-size: 0.8125rem; line-height: 1.6; }
 
     /* Hero */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
       text-align: center;
+      padding: 6rem 2rem 4rem;
+      border-bottom: 1px solid #21262d;
+      background: radial-gradient(ellipse at 50% 0%, #161b22 0%, #0d1117 70%);
     }
-    .hero-title {
-      font-size: 2.25rem;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.1;
+    .hero-badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      color: #8b949e;
+      border: 1px solid #30363d;
+      border-radius: 2rem;
+      padding: 0.25rem 0.9rem;
       margin-bottom: 1.5rem;
     }
-    .hero-subtitle {
-      font-size: 1.125rem;
-      color: #9ca3af;
-      max-width: 42rem;
+    .hero h1 {
+      color: #f0f6fc;
+      font-size: 2.75rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+    .hero p {
+      color: #8b949e;
+      font-size: 1.2rem;
+      max-width: 540px;
       margin: 0 auto 2.5rem;
     }
-
-    /* Gradient text */
-    .gradient-text {
-      background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #3b82f6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Badge */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      border-radius: 9999px;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      background: rgba(168, 85, 247, 0.1);
-      padding: 0.375rem 1rem;
-      font-size: 0.875rem;
-      color: #c084fc;
-      margin-bottom: 1rem;
-    }
-
-    .badge-context {
-      font-size: 0.8125rem;
-      color: #6b7280;
-      margin-bottom: 2rem;
-    }
-
-    /* Code block */
-    .code-block {
-      background: #1a1a2e;
-      border: 1px solid #2a2a4a;
-      border-radius: 0.75rem;
-    }
-    .glow { box-shadow: 0 0 40px rgba(168, 85, 247, 0.15); }
-
-    /* Terminal dots */
-    .terminal-dots {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.75rem;
-    }
-    .dot {
-      width: 0.75rem;
-      height: 0.75rem;
-      border-radius: 9999px;
-    }
-    .dot-red { background: rgba(239, 68, 68, 0.7); }
-    .dot-yellow { background: rgba(234, 179, 8, 0.7); }
-    .dot-green { background: rgba(34, 197, 94, 0.7); }
-
-    /* Step icon */
-    .step-icon {
-      width: 3.5rem;
-      height: 3.5rem;
-      border-radius: 1rem;
-      background: rgba(168, 85, 247, 0.2);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .hero pre {
+      max-width: 420px;
       margin: 0 auto 1rem;
-      font-size: 1.5rem;
-      color: #fff;
-    }
-
-    /* Why section */
-    .why-grid {
-      display: grid;
-      gap: 1.5rem;
-    }
-    .why-card {
-      background: #1a1a2e;
-      border: 1px solid #2a2a4a;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
       text-align: left;
+      font-size: 0.95rem;
     }
-    .why-card h3 {
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    .why-card p {
-      color: #9ca3af;
+    .hero pre code { font-size: 0.95rem; }
+    .hero .hint {
       font-size: 0.875rem;
-      line-height: 1.5;
+      color: #484f58;
+    }
+    .hero .hint code { color: #bc8cff; background: rgba(188,140,255,0.1); }
+
+    /* Sections */
+    .section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem;
+    }
+    .section h2 {
+      color: #f0f6fc;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #21262d;
+    }
+    .section p { margin-bottom: 1rem; }
+    .section ul { margin-bottom: 1rem; padding-left: 1.25rem; }
+    .section li { margin-bottom: 0.4rem; }
+
+    /* Steps */
+    .steps { list-style: none; }
+    .steps li {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #161b22;
+    }
+    .steps li:last-child { border-bottom: none; }
+    .steps strong { color: #f0f6fc; }
+    .steps .num {
+      display: inline-block;
+      width: 1.6rem;
+      color: #484f58;
+      font-weight: 600;
     }
 
-    /* Try section */
-    .try-examples {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
+    /* Table */
+    .comparison {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.5rem 0 1.5rem;
+      font-size: 0.8125rem;
     }
-    .try-example {
-      background: #1a1a2e;
-      border: 1px solid #2a2a4a;
-      border-radius: 0.5rem;
-      padding: 0.75rem 1rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.875rem;
-      color: #9ca3af;
+    .comparison th {
+      text-align: left;
+      color: #8b949e;
+      font-weight: 600;
+      padding: 0.6rem 0.75rem;
+      border-bottom: 2px solid #21262d;
     }
-    .try-example .cmd { color: #c084fc; }
+    .comparison td {
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid #161b22;
+    }
+    .comparison tbody tr:first-child td { color: #58a6ff; }
+
+    /* Try examples */
+    .try-list { list-style: none; padding-left: 0; }
+    .try-list li {
+      background: #161b22;
+      border: 1px solid #21262d;
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      margin-bottom: 0.5rem;
+      font-family: 'SF Mono', Consolas, monospace;
+      font-size: 0.8125rem;
+    }
+    .try-list .cmd { color: #bc8cff; }
+
+    /* Divider between sections */
+    .sep { border: none; border-top: 1px solid #21262d; max-width: 860px; margin: 0 auto; }
 
     /* Footer */
     footer {
-      padding: 3rem 1.5rem;
-      border-top: 1px solid rgba(31, 41, 55, 0.5);
-    }
-    .footer-inner {
-      max-width: 64rem;
+      max-width: 860px;
       margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
+      padding: 2rem 2rem 3rem;
+      color: #484f58;
+      font-size: 0.8125rem;
     }
-    .footer-links {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      font-size: 0.875rem;
-      color: #6b7280;
-    }
-    .footer-links a:hover { color: #d1d5db; transition: color 0.15s; }
+    footer a { color: #484f58; }
+    footer a:hover { color: #8b949e; }
 
-    /* Mobile overrides */
-    .code-block { overflow-x: auto; }
-    .install-cmd { white-space: nowrap; }
-
-    /* Responsive */
-    @media (min-width: 640px) {
-      .hero-title { font-size: 3.75rem; }
-      .hero-subtitle { font-size: 1.25rem; }
-      .grid { grid-template-columns: repeat(3, 1fr); }
-      .why-grid { grid-template-columns: repeat(3, 1fr); }
-      .footer-inner { flex-direction: row; justify-content: space-between; }
-      .code-block-hero { padding: 1.5rem; }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      .hero { padding: 4rem 1.5rem 3rem; }
+      .section { padding: 2.5rem 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div style="max-width: 48rem;">
-      <div class="badge">Claude Code Skill</div>
+  <div class="hero">
+    <div class="hero-badge">Claude Code Skill</div>
+    <h1>trystk</h1>
+    <p>Find the right SaaS, API, or library — before you waste days on integration.</p>
+    <pre><code>curl -sL trystk.dev/i | sh</code></pre>
+    <div class="hint">Then use <code>/find-solution</code> in Claude Code</div>
+  </div>
 
-      <h1 class="hero-title">
-        Stop wasting days on<br>
-        <span class="gradient-text">wrong tools</span>
-      </h1>
+  <div class="section">
+    <h2>What it does</h2>
+    <ol class="steps">
+      <li><span class="num">1.</span> <strong>Scans your stack</strong> — reads package.json, docker-compose, .env to understand what you already use</li>
+      <li><span class="num">2.</span> <strong>Asks the right questions</strong> — volume, MVP vs production, hard constraints</li>
+      <li><span class="num">3.</span> <strong>Searches and fetches</strong> — real pricing pages, docs, SDK availability. Not training data</li>
+      <li><span class="num">4.</span> <strong>Compares and scores</strong> — SDK fit, free tier, feature match, DX, pricing at your scale</li>
+      <li><span class="num">5.</span> <strong>Recommends with evidence</strong> — every claim links to a source</li>
+    </ol>
+  </div>
 
-      <p class="hero-subtitle">
-        AI agent that scans your stack, searches for solutions, compares pricing and features, and recommends the best fit — before you commit to integration.
-      </p>
+  <hr class="sep">
 
-      <div class="code-block code-block-hero glow" style="max-width: 36rem; margin: 0 auto 1.5rem; padding: 1rem 1.5rem;">
-        <div class="terminal-dots">
-          <div class="dot dot-red"></div>
-          <div class="dot dot-yellow"></div>
-          <div class="dot dot-green"></div>
-          <span class="text-xs text-gray-500" style="margin-left: 0.5rem;">terminal</span>
-        </div>
-        <code class="text-sm text-green-400 select-all install-cmd" style="font-size: 0.9375rem;">curl -sL trystk.dev/i | sh</code>
-      </div>
+  <div class="section">
+    <h2>Why not just prompt it yourself?</h2>
+    <p>A plain prompt gives you a generic list. This skill:</p>
+    <ul>
+      <li>Knows your actual stack (scans project files, not guessing)</li>
+      <li>Fetches current pricing (not hallucinated numbers from training data)</li>
+      <li>Scores objectively (you see the breakdown, not just "I think X is good")</li>
+    </ul>
+  </div>
 
-      <p class="text-sm text-gray-500">Then use <code class="text-purple-400">/find-solution</code> in Claude Code</p>
-    </div>
-  </section>
+  <hr class="sep">
 
-  <!-- How it works -->
-  <section class="section">
-    <div class="container">
-      <h2 class="text-3xl font-bold text-white text-center" style="margin-bottom: 4rem;">How it works</h2>
+  <div class="section">
+    <h2>Example</h2>
 
-      <div class="grid">
-        <div class="text-center">
-          <div class="step-icon">1</div>
-          <h3 class="text-lg font-semibold text-white" style="margin-bottom: 0.5rem;">Scan</h3>
-          <p class="text-gray-400 text-sm">Reads your package.json, docker-compose, .env to understand your stack and existing integrations.</p>
-        </div>
+<pre><code><span style="color:#484f58">$</span> <span style="color:#bc8cff">/find-solution</span> email API with templates
 
-        <div class="text-center">
-          <div class="step-icon">2</div>
-          <h3 class="text-lg font-semibold text-white" style="margin-bottom: 0.5rem;">Search</h3>
-          <p class="text-gray-400 text-sm">Searches the web for matching services, fetches real pricing pages and documentation.</p>
-        </div>
-
-        <div class="text-center">
-          <div class="step-icon">3</div>
-          <h3 class="text-lg font-semibold text-white" style="margin-bottom: 0.5rem;">Compare</h3>
-          <p class="text-gray-400 text-sm">Scores each option on SDK fit, free tier, features, DX, and pricing. Gives a clear recommendation.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Why not just ask ChatGPT / Claude? -->
-  <section class="section section-border">
-    <div class="container">
-      <h2 class="text-3xl font-bold text-white text-center" style="margin-bottom: 1rem;">Why not just prompt it yourself?</h2>
-      <p class="text-gray-400 text-center" style="margin-bottom: 3rem; max-width: 36rem; margin-left: auto; margin-right: auto;">A plain prompt gives generic answers. This skill is different.</p>
-
-      <div class="why-grid">
-        <div class="why-card">
-          <h3>Knows your stack</h3>
-          <p>Scans your project files — package.json, docker-compose, .env — and recommends services with a native SDK for your language and framework.</p>
-        </div>
-        <div class="why-card">
-          <h3>Real pricing, not guesses</h3>
-          <p>Fetches actual pricing pages and docs at runtime. No hallucinated numbers from 2024 training data.</p>
-        </div>
-        <div class="why-card">
-          <h3>Objective scoring</h3>
-          <p>Every recommendation is scored on SDK fit, free tier, feature match, DX, and cost. You see the breakdown, not just "I think X is good."</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Example -->
-  <section class="section section-border">
-    <div class="container-sm">
-      <h2 class="text-3xl font-bold text-white text-center" style="margin-bottom: 3rem;">Example</h2>
-
-      <div class="code-block glow" style="padding: 1.5rem;">
-        <div class="terminal-dots" style="margin-bottom: 1rem;">
-          <div class="dot dot-red"></div>
-          <div class="dot dot-yellow"></div>
-          <div class="dot dot-green"></div>
-          <span class="text-xs text-gray-500" style="margin-left: 0.5rem;">Claude Code</span>
-        </div>
-        <pre class="text-sm leading-relaxed overflow-x-auto"><code><span class="text-gray-500">$</span> <span class="text-purple-400">/find-solution</span> <span class="text-gray-300">email API with templates</span>
-
-<span class="text-gray-500">I understand you need: an email API with template support
-The use case: sending templated emails from your app
-I'll be looking for: email API solutions with built-in templates
+<span style="color:#8b949e">I understand you need: an email API with template support
+Use case: sending templated emails from your app
+Looking for: email API solutions with built-in templates
 
 Is this correct?</span>
 
-<span class="text-green-400">&gt; yes, for transactional emails like order confirmations</span>
+<span style="color:#58a6ff">&gt; yes, transactional emails like order confirmations</span>
 
-<span class="text-gray-500">A few more questions:
-1. What volume do you expect? (emails/month)
-2. Is this for an MVP or production?
-3. Any hard constraints? (compliance, self-hosted, etc.)</span>
+<span style="color:#8b949e">Questions:
+1. Expected volume? (emails/month)
+2. MVP or production?
+3. Hard constraints? (compliance, self-hosted, etc.)</span>
 
-<span class="text-green-400">&gt; ~5k/mo, MVP, no constraints</span>
+<span style="color:#58a6ff">&gt; ~5k/mo, MVP, no constraints</span>
 
-<span class="text-gray-500">Scanning your stack...</span>
-<span class="text-green-400">Your stack: TypeScript + React + Supabase</span>
+<span style="color:#8b949e">Scanning stack...</span>
+<span style="color:#7ee787">Your stack: TypeScript + React + Supabase</span>
 
-<span class="text-white font-semibold">Comparison: Email API</span>
-<span class="text-gray-500">Scoring weighted for: MVP — DX prioritized</span>
+<span style="color:#f0f6fc;font-weight:600">Comparison: Email API</span>
+<span style="color:#8b949e">Weighted for: MVP (DX prioritized)</span></code></pre>
 
-<span class="text-gray-400">| Service  | Free Tier  | Price   | SDK    | Score (sum/10) |</span>
-<span class="text-gray-400">|----------|------------|---------|--------|----------------|</span>
-<span class="text-green-400">| Resend   | 3,000/mo   | $20/mo  | JS, Py | 9/10           |</span>
-<span class="text-gray-300">| Postmark | 100/mo     | $15/mo  | JS, Py | 8/10           |</span>
-<span class="text-gray-300">| SendGrid | 100/day    | $15/mo  | JS, Py | 7/10           |</span>
+    <table class="comparison">
+      <thead>
+        <tr><th>Service</th><th>Free Tier</th><th>Price</th><th>SDK</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Resend</td><td>3,000/mo</td><td>$20/mo</td><td>JS, Py</td><td>9/10</td></tr>
+        <tr><td>Postmark</td><td>100/mo</td><td>$15/mo</td><td>JS, Py</td><td>8/10</td></tr>
+        <tr><td>SendGrid</td><td>100/day</td><td>$15/mo</td><td>JS, Py</td><td>7/10</td></tr>
+      </tbody>
+    </table>
 
-<span class="text-white font-semibold">Recommendation: Resend</span>
-<span class="text-gray-400">Native TS SDK, generous free tier, excellent docs.</span>
-<span class="text-gray-500">Quick start:</span> <span class="text-yellow-400">npm install resend</span></code></pre>
-      </div>
-    </div>
-  </section>
+<pre><code><span style="color:#f0f6fc;font-weight:600">Recommendation: Resend</span>
+Native TS SDK, generous free tier, excellent docs.
+Quick start: <span style="color:#ffa657">npm install resend</span></code></pre>
+  </div>
 
-  <!-- Install + Try -->
-  <section class="section section-border">
-    <div class="container-xs text-center">
-      <h2 class="text-3xl font-bold text-white" style="margin-bottom: 1rem;">Get started</h2>
-      <p class="text-gray-400" style="margin-bottom: 2rem;">One command. No dependencies. Works with Claude Code.</p>
+  <hr class="sep">
 
-      <div class="code-block glow" style="padding: 1.5rem; margin-bottom: 1.5rem;">
-        <code class="text-lg text-green-400 select-all install-cmd">curl -sL trystk.dev/i | sh</code>
-      </div>
+  <div class="section">
+    <h2>Install</h2>
+    <pre><code>curl -sL trystk.dev/i | sh</code></pre>
+    <p>Or manually:</p>
+<pre><code>mkdir -p ~/.claude/skills/find-solution
+curl -sL https://raw.githubusercontent.com/get-trystk/find-solution/main/SKILL.md \
+  &gt; ~/.claude/skills/find-solution/SKILL.md</code></pre>
+  </div>
 
-      <p class="text-gray-500 text-sm" style="margin-bottom: 0.5rem;">Or manually:</p>
-      <div class="code-block text-left" style="padding: 1rem; margin-bottom: 3rem;">
-        <code class="text-sm text-gray-400">mkdir -p ~/.claude/skills/find-solution
-curl -sL <span class="text-purple-400">https://raw.githubusercontent.com/get-trystk/find-solution/main/SKILL.md</span> \
-  > ~/.claude/skills/find-solution/SKILL.md</code>
-      </div>
+  <hr class="sep">
 
-      <h3 class="text-lg font-semibold text-white" style="margin-bottom: 1rem;">Then try</h3>
-      <div class="try-examples" style="max-width: 32rem; margin-left: auto; margin-right: auto;">
-        <div class="try-example"><span class="cmd">/find-solution</span> payment gateway for marketplace</div>
-        <div class="try-example"><span class="cmd">/find-solution</span> real-time database for React</div>
-        <div class="try-example"><span class="cmd">/find-solution</span> auth with SSO support</div>
-      </div>
+  <div class="section">
+    <h2>Try it</h2>
+    <ul class="try-list">
+      <li><span class="cmd">/find-solution</span> payment gateway for marketplace</li>
+      <li><span class="cmd">/find-solution</span> real-time database for React</li>
+      <li><span class="cmd">/find-solution</span> auth with SSO support</li>
+    </ul>
+  </div>
 
-      <a href="https://github.com/get-trystk/find-solution" class="text-sm text-gray-500" style="text-decoration: underline; text-decoration-color: rgba(107,114,128,0.3);">Star on GitHub</a>
-    </div>
-  </section>
-
-  <!-- Footer -->
   <footer>
-    <div class="footer-inner">
-      <div class="flex items-center">
-        <span class="text-lg font-bold text-white">trystk</span><span class="text-gray-500">.dev</span>
-      </div>
-      <div class="footer-links">
-        <a href="https://github.com/get-trystk/find-solution">GitHub</a>
-        <span>Built for developers who value their time</span>
-      </div>
-    </div>
+    <a href="https://github.com/get-trystk/find-solution">GitHub</a> &middot; Built for developers who value their time
   </footer>
 
 </body>
