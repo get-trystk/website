@@ -190,9 +190,10 @@
     <ol class="steps">
       <li><span class="num">1.</span> <strong>Scans your stack</strong> — reads package.json, docker-compose, .env to understand what you already use</li>
       <li><span class="num">2.</span> <strong>Asks the right questions</strong> — volume, MVP vs production, hard constraints</li>
-      <li><span class="num">3.</span> <strong>Searches and fetches</strong> — real pricing pages, docs, SDK availability. Not training data</li>
-      <li><span class="num">4.</span> <strong>Compares and scores</strong> — SDK fit, free tier, feature match, DX, pricing at your scale</li>
-      <li><span class="num">5.</span> <strong>Recommends with evidence</strong> — every claim links to a source</li>
+      <li><span class="num">3.</span> <strong>Decomposes the task</strong> — splits it into sub-problems and weighs self-host / open-source against managed SaaS, not just one category</li>
+      <li><span class="num">4.</span> <strong>Searches and cross-checks</strong> — cross-checks vendor pricing against practitioner reports (GitHub issues, Hacker News), not just marketing</li>
+      <li><span class="num">5.</span> <strong>Compares and scores</strong> — reliability / anti-ban, maintenance burden, feature match, integration effort, and pricing at your scale</li>
+      <li><span class="num">6.</span> <strong>Recommends with evidence</strong> — every claim links to a source</li>
     </ol>
   </div>
 
@@ -203,7 +204,8 @@
     <p>A plain prompt gives you a generic list. This skill:</p>
     <ul>
       <li>Knows your actual stack (scans project files, not guessing)</li>
-      <li>Fetches current pricing (not hallucinated numbers from training data)</li>
+      <li>Decomposes the task and weighs self-host vs SaaS (a $2/mo build can beat a $47/mo service)</li>
+      <li>Cross-checks vendor pricing against practitioner reports — GitHub, HN — not just marketing</li>
       <li>Scores objectively (you see the breakdown, not just "I think X is good")</li>
     </ul>
   </div>
