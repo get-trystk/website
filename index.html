@@ -181,7 +181,7 @@
     <div class="hero-badge">Claude Code Skill</div>
     <h1>trystk</h1>
     <p>Find the right SaaS, API, or library — before you waste days on integration.</p>
-    <pre><code>curl -sL trystk.dev/i | sh</code></pre>
+    <pre><code data-install-cmd>curl -sL trystk.dev/i | sh</code></pre>
     <div class="hint">Then use <code>/find-solution</code> in Claude Code</div>
   </div>
 
@@ -258,7 +258,7 @@ Quick start: <span style="color:#ffa657">npm install resend</span></code></pre>
 
   <div class="section">
     <h2>Install</h2>
-    <pre><code>curl -sL trystk.dev/i | sh</code></pre>
+    <pre><code data-install-cmd>curl -sL trystk.dev/i | sh</code></pre>
     <p>Or manually:</p>
 <pre><code>mkdir -p ~/.claude/skills/find-solution
 curl -sL https://raw.githubusercontent.com/get-trystk/find-solution/main/SKILL.md \
@@ -279,6 +279,18 @@ curl -sL https://raw.githubusercontent.com/get-trystk/find-solution/main/SKILL.m
   <footer>
     <a href="https://github.com/get-trystk/find-solution">GitHub</a> &middot; Built for developers who value their time
   </footer>
+
+  <script>
+    (function () {
+      var c = new URLSearchParams(window.location.search).get('c');
+      if (c && /^[a-z0-9]{2,4}$/.test(c)) {
+        var els = document.querySelectorAll('[data-install-cmd]');
+        for (var i = 0; i < els.length; i++) {
+          els[i].textContent = 'curl -sL trystk.dev/' + c + ' | sh';
+        }
+      }
+    })();
+  </script>
 
 </body>
 </html>
